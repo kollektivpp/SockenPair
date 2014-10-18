@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+	<head>
+    	<title></title>
+ 	</head>
+	<body>
+		<ul id="mainList">
+			
+		</ul>
+
+    	<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
+    	<script src="/socket.io/socket.io.js"></script>
+		<script>
+			$(document).ready(function() {
+				var socket = io();
+				socket.emit( 'foobar', new Date() );
+
+				socket.on('foobar', function(msg) {
+					$('#mainList').append( $('<li>').text(msg) );
+				});
+			});
+		</script>
+	</body>
+</html>
