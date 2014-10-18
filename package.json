@@ -9,6 +9,7 @@
     "formidable": "*",
     "fs-extra": "*",
     "socket.io": "^1.1.0",
-    "ejs": "*"
+    "ejs": "*",
+    "body-parser": "*"
   }
 }
