@@ -1,7 +1,7 @@
 var Downloader = Downloader || {};
 
 Downloader.initialize = function() {
-    Downloader.dragImage = document.querySelector('#dragImage');
+    Downloader.dragImage = document.querySelector('#previewImage');
     Downloader.downloadwrapper = document.querySelector('#downloadwrapper');
 
     Downloader.registerEventListener();
