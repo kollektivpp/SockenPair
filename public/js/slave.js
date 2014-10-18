@@ -1,9 +1,15 @@
 $(document).ready(function() {
 	var socket = io(),
-	masterSocketID = $('#masterSocketID').val();
+		masterSocketID = $('#masterSocketID').val(),
+		previewImage = $('#previewImage');
+
 	socket.emit( 'addSlaveUser', masterSocketID );
 
 	socket.on('successfullyUploadedImage', function(filePath) {
-		$('#dragImage').attr('src', filePath);
+		previewImage.attr('src', filePath);
+	});
+
+	socket.on('showImage', function(filePath) {
+		previewImage.addClass('show');
 	});
 });
