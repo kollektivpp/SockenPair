@@ -3,12 +3,16 @@
 	<head>
 		<meta charset="utf-8">
     	<title>SockenPair - Slave</title>
+    	<link href="css/normalize.css" media="all" rel="stylesheet" type="text/css" />
  	</head>
 	<body>
 		<input id="masterSocketID" type="hidden" value="<%= socketID %>"/>
 
+		<img src="http://placehold.it/350x150" id="dragImage" draggable="true" />
+
     	<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
     	<script src="/socket.io/socket.io.js"></script>
     	<script src="/js/slave.js"></script>
+    	<script src="/js/dragger.js"></script>
 	</body>
 </html>
