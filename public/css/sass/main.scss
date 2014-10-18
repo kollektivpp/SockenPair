@@ -76,13 +76,13 @@ select {
     height: 150px;
 }
 #previewImage {
-    @include transition(left, 1000ms, ease-out);
+    @include transition(left, 500ms, ease-out);
     position: absolute;
-    left: -100%;
+    right: -100%;
     max-height: 500px;
 
     &.show {
-        @include transition(left, 1000ms, ease-out);
+        @include transition(left, 500ms, ease-out);
         left: 10%
     }
 }

@@ -79,13 +79,13 @@ io.on('connection', function(socket) {
 		io.emit('masterUserAdded', socket.id);
 		console.log(socket.id);
 	});
-	socket.on('addSlaveUser', function(mastSocketID) {
-		connectedUser[mastSocketID].push(socket.id);
-		io.sockets.connected[mastSocketID].emit('slaveUserConnected');
+	socket.on('addSlaveUser', function(masterSocketID) {
+		connectedUser[masterSocketID].push(socket.id);
+		io.sockets.connected[masterSocketID].emit('slaveUserConnected');
 	});
 
-	socket.on('imageMoved', function(mastSocketID) {
-		showImageOnSlave(mastSocketID);
+	socket.on('imageMovedOutOfViewport', function(payload) {
+		showImageOnSlave(payload);
 	});
 
 	socket.on('disconnect', function() {
@@ -94,15 +94,16 @@ io.on('connection', function(socket) {
 	});
 });
 
-function notifyConnectedClients(mastSocketID, filePath) {
-	connectedUser[mastSocketID].forEach(function(item) {
+function notifyConnectedClients(masterSocketID, filePath) {
+	connectedUser[masterSocketID].forEach(function(item) {
 		io.sockets.connected[item].emit('successfullyUploadedImage', filePath);
 	});
 }
-function showImageOnSlave(mastSocketID) {
-	connectedUser[mastSocketID].forEach(function(item) {
-		if (item != mastSocketID) {
-			io.sockets.connected[item].emit('showImage');
+function showImageOnSlave(payload) {
+	var masterSocketID = payload.masterSocketID;
+	connectedUser[masterSocketID].forEach(function(item) {
+		if (item != masterSocketID) {
+			io.sockets.connected[item].emit('showImage', payload.viewportDelta);
 		}
 	});
 }

@@ -6,6 +6,11 @@ Dragger.initialize = function() {
     Dragger.dragImageStyle = Dragger.dragImage.style;
     Dragger.dragStartX = 0;
     Dragger.dragStartY = 0;
+    Dragger.maxX = window.innerWidth;
+    Dragger.maxY = window.innerHeight;
+    Dragger.imageWidth = Dragger.dragImage.width;
+    Dragger.imageHeight = Dragger.dragImage.height;
+    Dragger.outOfViewport = false;
 
     Dragger.registerEventListener();
 };
@@ -14,7 +19,7 @@ Dragger.registerEventListener = function() {
 	Dragger.dragImage.addEventListener('dragstart', function(e) {
 		var imageOffset = Dragger.getOffset(Dragger.dragImage);
 		Dragger.dragStartX = e.x - imageOffset.left;
-    	Dragger.dragStartY = e.y - imageOffset.top;
+        Dragger.dragStartY = e.y - imageOffset.top;
 	}, false);
 
     Dragger.dragImage.addEventListener('dragend', function(e) {
@@ -47,15 +52,26 @@ Dragger.registerEventListener = function() {
         }
         Dragger.dragStartX = 0;
         Dragger.dragStartY = 0;
+
     }, false);
 
     Dragger.dragImage.addEventListener('touchmove', function(e) {
         e.preventDefault();
-        var touches = e.changedTouches;
+        var touches = e.changedTouches,
+            viewportDelta;
         for (var i=0; i < touches.length; i++) {
             Dragger.dragImageStyle.top = (touches[i].pageY - Dragger.dragStartY) + 'px';
             Dragger.dragImageStyle.left = (touches[i].pageX - Dragger.dragStartX) + 'px';
         }
+
+        viewportDelta = Dragger.maxX - (Dragger.imageWidth + parseInt(Dragger.dragImageStyle.left, 10));
+
+        if (viewportDelta < 0) {
+            Dragger.outOfViewport = true;
+            var event = new CustomEvent('movedOutOfViewport', {'detail': viewportDelta});
+            Dragger.dragImage.dispatchEvent(event);
+        }
+
     }, false);
 };
 
@@ -68,6 +84,6 @@ Dragger.getOffset = function(element) {
         element = element.offsetParent;
     }
     return { top: _y, left: _x };
-}
+};
 
 Dragger.initialize.call();

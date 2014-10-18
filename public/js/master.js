@@ -1,7 +1,8 @@
 $(document).ready(function() {
 	var socket = io(),
 		clientID = null,
-		connectionHint = $('#connectionHint');
+		connectionHint = $('#connectionHint'),
+		dragImage = $('#dragImage');
 
 	socket.emit( 'addMasterUser', clientID );
 
@@ -25,6 +26,10 @@ $(document).ready(function() {
 
 	socket.on('successfullyUploadedImage', function(filePath) {
 		$('#contentwrapper').hide();
-		$('#dragImage').attr('src', filePath);
+		dragImage.attr('src', filePath);
+
+		dragImage.on('movedOutOfViewport', function(e) {
+			socket.emit('imageMovedOutOfViewport', {'masterSocketID':clientID, 'viewportDelta':e.detail});
+		});
 	});
 });
