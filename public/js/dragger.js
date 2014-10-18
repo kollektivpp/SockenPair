@@ -2,6 +2,7 @@ var Dragger = Dragger || {};
 
 Dragger.initialize = function() {
     Dragger.dragImage = document.querySelector('#dragImage');
+    Dragger.downloadwrapper = document.querySelector('#downloadwrapper');
     Dragger.dragStartX = 0;
     Dragger.dragStartY = 0;
 
@@ -23,6 +24,12 @@ Dragger.registerEventListener = function() {
     	Dragger.dragStartY = 0;
     	console.log(e);
     }, false);
+
+    Dragger.dragImage.addEventListener('click', function(e) {
+        // TODO: must be dynamic
+        Dragger.downloadwrapper.action = Dragger.downloadwrapper.action + '/' + 'bfee6581f6595eb6bf21c64d9edaadd9.png';
+    	Dragger.downloadwrapper.submit();
+    });
 };
 
 Dragger.getOffset = function(element) {

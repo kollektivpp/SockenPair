@@ -65,6 +65,11 @@ app.post('/upload', function(req, res) {
 	});
 });
 
+app.get('/download/:imageName', function(req, res) {
+	var file = __dirname + '/uploads/' + req.param("imageName");
+	res.download(file);
+});
+
 io.on('connection', function(socket) {
 
 	socket.on('addMasterUser', function(user) {
