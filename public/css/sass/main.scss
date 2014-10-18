@@ -1,6 +1,10 @@
 @import "general-mixin";
 @import "variables";
 
+html, body {
+    overflow: hidden;
+}
+
 body {
     background-color: $gray;
     font-size: $fontSize;
