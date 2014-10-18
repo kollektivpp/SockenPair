@@ -20,6 +20,7 @@ function createUploadFolder() {
 createUploadFolder();
 
 // Routing
+app.use( express.static(__dirname + '/public') );
 app.set('views', __dirname + '/public');
 app.engine('html', require('ejs').renderFile);
 
