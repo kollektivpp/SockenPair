@@ -22,4 +22,9 @@ $(document).ready(function() {
 		$('#qrcode').hide();
 		$('#contentwrapper').show();
 	});
+
+	socket.on('successfullyUploadedImage', function(filePath) {
+		$('#contentwrapper').hide();
+		$('#dragImage').attr('src', filePath);
+	});
 });
