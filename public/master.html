@@ -2,18 +2,20 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-    	<title>SockenPair - Master</title>
-    	<link href="css/normalize.css" media="all" rel="stylesheet" type="text/css" />
-        <link href="css/main.css" media="all" rel="stylesheet" type="text/css" />
- 	</head>
+		<title>SockenPair - Master</title>
+		<link href="css/normalize.css" media="all" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" media="all" rel="stylesheet" type="text/css" />
+	</head>
 
 	<body>
 		<a href="javascript:void(0);" id="connectionHint" style="display:none;" target="_blank">Bitte weiteren Client connected!</a>
 		
 		<form method="POST" action="/upload" enctype="multipart/form-data" target="hiddenIframe" id="contentwrapper" style="display:none;">
 			<div id="dragdropfield">Place file here or click</div>
-            <input type="file" id="filefield" name="filefield" />
+			<input type="file" id="filefield" name="filefield" accept="image/*" />
 		</form>
+
+		<img src="http://placehold.it/350x150" id="dragImage" draggable="true" />
 		<iframe src="" id="hiddenIframe" name="hiddenIframe"></iframe>
 
 
@@ -24,6 +26,10 @@
     	<script src="/js/uploader.js"></script>
     	<script src="/js/qrcode.min.js"></script>
     	<script src="/socket.io/socket.io.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
+		<script src="/js/uploader.js"></script>
+		<script src="/js/dragger.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
 		<script>
 			$(document).ready(function() {
 				var socket = io(),
