@@ -82,6 +82,6 @@ io.on('connection', function(socket) {
 	});
 });
 
-http.listen(8888, function() {
-	console.log('listen on port ' + '8888'.rainbow);
+http.listen(port, function() {
+	console.log('listen on port ' + port);
 });
