@@ -17,9 +17,12 @@
 		<iframe src="" id="hiddenIframe" name="hiddenIframe"></iframe>
 
 
+		<div id="qrcode"></div>
+
 
     	<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
     	<script src="/js/uploader.js"></script>
+    	<script src="/js/qrcode.min.js"></script>
     	<script src="/socket.io/socket.io.js"></script>
 		<script>
 			$(document).ready(function() {
@@ -31,15 +34,18 @@
 
 				socket.on('masterUserAdded', function(socketID) {
 					if ( !clientID ) {
-						clientID = socketID;
+						clientID = socketID,
+						slaveURL = location.href + 'connectSlaveUser?socketID=' + clientID;
 
-						connectionHint.attr('href', location.href + 'connectSlaveUser?socketID=' + clientID);
+						new QRCode(document.getElementById("qrcode"), slaveURL);
+						connectionHint.attr('href', slaveURL);
 						connectionHint.show();
 					}
 				});
 
 				socket.on('slaveUserConnected', function() {
 					connectionHint.hide();
+					$('#qrcode').hide();
 					$('#contentwrapper').show();
 				});
 			});
