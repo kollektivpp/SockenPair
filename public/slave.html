@@ -9,12 +9,6 @@
 
     	<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
     	<script src="/socket.io/socket.io.js"></script>
-		<script>
-			$(document).ready(function() {
-				var socket = io(),
-				masterSocketID = $('#masterSocketID').val();
-				socket.emit( 'addSlaveUser', masterSocketID );
-			});
-		</script>
+    	<script src="/js/slave.js"></script>
 	</body>
 </html>
