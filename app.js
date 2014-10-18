@@ -84,6 +84,10 @@ io.on('connection', function(socket) {
 		io.sockets.connected[mastSocketID].emit('slaveUserConnected');
 	});
 
+	socket.on('imageMoved', function(mastSocketID) {
+		showImageOnSlave(mastSocketID);
+	});
+
 	socket.on('disconnect', function() {
 		//TODO: make sure to inform master or slave that the counterpart has disconnected
 		//TODO: remove them from connectedUser array
