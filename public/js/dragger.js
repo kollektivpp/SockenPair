@@ -57,12 +57,6 @@ Dragger.registerEventListener = function() {
             Dragger.dragImageStyle.left = (touches[i].pageX - Dragger.dragStartX) + 'px';
         }
     }, false);
-
-    Dragger.dragImage.addEventListener('click', function(e) {
-        // TODO: must be dynamic
-        Dragger.downloadwrapper.action = Dragger.downloadwrapper.action + '/' + 'bfee6581f6595eb6bf21c64d9edaadd9.png';
-    	Dragger.downloadwrapper.submit();
-    });
 };
 
 Dragger.getOffset = function(element) {
