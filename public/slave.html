@@ -10,11 +10,15 @@
 	<body>
 		<input id="masterSocketID" type="hidden" value="<%= socketID %>"/>
 
-		<img src="" id="previewImage" draggable="true" />
+        <form method="POST" action="/download" target="hiddenIframe" id="downloadwrapper">
+		    <img src="" id="previewImage" name="previewImage" />
+            <input type="hidden" name="previewImageHidden" id="previewImageHidden" value="" />
+        </form>
+
+        <iframe src="" id="hiddenIframe" name="hiddenIframe"></iframe>
 
     	<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
     	<script src="/socket.io/socket.io.js"></script>
     	<script src="/js/slave.js"></script>
-    	<script src="/js/downloader.js"></script>
 	</body>
 </html>

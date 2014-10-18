@@ -26,6 +26,7 @@ $(document).ready(function() {
 
 	socket.on('successfullyUploadedImage', function(filePath) {
 		$('#contentwrapper').hide();
+		$('#dragImage').attr('src', filePath);
 		dragImage.attr('src', filePath);
 
 		dragImage.on('movedOutOfViewport', function(e) {

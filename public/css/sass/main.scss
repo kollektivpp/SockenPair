@@ -2,7 +2,9 @@
 @import "variables";
 
 html, body {
+    height: 100%;
     overflow: hidden;
+    width: 100%;
 }
 
 body {
@@ -11,6 +13,7 @@ body {
     margin: 0;
     min-height: $windowHeight;
     min-width: $windowWidth;
+    position: relative;
 }
 
 input, select {
@@ -71,10 +74,7 @@ select {
     height: 0;
     width: 0;
 }
-#dragImage {
-    width: 350px;
-    height: 150px;
-}
+
 #previewImage {
     @include transition(left, 500ms, ease-out);
     position: absolute;
@@ -85,4 +85,21 @@ select {
         @include transition(left, 500ms, ease-out);
         left: 10%
     }
+}
+
+#downloadwrapper {
+    top: 25%;
+    display: none;
+    height: 50%;
+    position: absolute;
+    vertical-align: middle;
+    width: 50%;
+}
+
+#downloadwrapper img {
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+    position: absolute;
+    bottom: 0;
 }

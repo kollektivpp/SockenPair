@@ -38,10 +38,6 @@ Uploader.registerEventListener = function() {
         Uploader.fileField.click();
     }, false);
 
-    Uploader.dragDropField.addEventListener('touchend', function(e) {
-        Uploader.fileField.click();
-    }, false);
-
     Uploader.fileField.addEventListener('change', function(e) {
         Uploader.formField.submit();
     }, false);

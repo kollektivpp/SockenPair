@@ -2,7 +2,9 @@ $(document).ready(function() {
 	var socket = io(),
 		masterSocketID = $('#masterSocketID').val(),
 		previewImage = $('#previewImage'),
-		screenWidth = window.innerWidth;
+		screenWidth = window.innerWidth,
+		downloadwrapper = $('#downloadwrapper'),
+		previewImageHidden = $('#previewImageHidden');
 
 	socket.emit( 'addSlaveUser', masterSocketID );
 
@@ -12,7 +14,11 @@ $(document).ready(function() {
 	});
 
 	socket.on('showImage', function(viewportDelta) {
-		// var xPos = parseInt(previewImage.css('right'), 10);
+		downloadwrapper.show();
+		previewImage.addClass('show');
+		previewImageHidden.val(previewImage.attr('src'));
+    	downloadwrapper.submit();
+
 		previewImage.css('right', screenWidth + viewportDelta);
 	});
 });
