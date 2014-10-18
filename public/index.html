@@ -1,14 +1,24 @@
 <!doctype html>
 <html>
 	<head>
-    	<title></title>
+		<meta charset="utf-8">
+    	<title>SockenPair</title>
+    	<link href="css/normalize.css" media="all" rel="stylesheet" type="text/css" />
+        <link href="css/main.css" media="all" rel="stylesheet" type="text/css" />
  	</head>
 	<body>
+		<form method="POST" action="/upload" enctype="multipart/form-data" target="hiddenIframe" id="contentwrapper">
+			<div id="dragdropfield">Place file here or click</div>
+            <input type="file" id="filefield" name="filefield" />
+		</form>
 		<ul id="mainList">
 			
 		</ul>
 
+		<iframe src="" id="hiddenIframe" name="hiddenIframe"></iframe>
+
     	<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
+    	<script src="/js/uploader.js"></script>
     	<script src="/socket.io/socket.io.js"></script>
 		<script>
 			$(document).ready(function() {
