@@ -14,7 +14,9 @@
 			<input type="file" id="filefield" name="filefield" accept="image/*" />
 		</form>
 
-		<img src="http://placehold.it/350x150" id="dragImage" draggable="true" />
+		<form method="GET" action="/download" target="hiddenIframe" id="downloadwrapper">
+			<img src="http://placehold.it/350x150" id="dragImage" draggable="true" />
+		</form>
 		<iframe src="" id="hiddenIframe" name="hiddenIframe"></iframe>
 
 		<a href="javascript:void(0);" id="connectionHint" style="display:none;" target="_blank">Bitte weiteren Client connected!</a>
