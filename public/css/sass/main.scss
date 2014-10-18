@@ -75,18 +75,6 @@ select {
     width: 0;
 }
 
-#previewImage {
-    @include transition(left, 500ms, ease-out);
-    position: absolute;
-    right: -100%;
-    max-height: 500px;
-
-    &.show {
-        @include transition(left, 500ms, ease-out);
-        left: 10%
-    }
-}
-
 #downloadwrapper {
     top: 25%;
     display: none;
@@ -94,6 +82,17 @@ select {
     position: absolute;
     vertical-align: middle;
     width: 50%;
+
+    &.slave {
+        @include transition(left, 500ms, ease-out);
+        position: absolute;
+        right: -100%;
+
+        &.show {
+            @include transition(left, 500ms, ease-out);
+            left: 10%
+        }
+    }
 }
 
 #downloadwrapper img {
