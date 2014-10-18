@@ -26,6 +26,10 @@ app.engine('html', require('ejs').renderFile);
 app.get('/', function(req, res) {
 	res.render('master.html');
 });
+app.get('/connectSlaveUser', function(req, res) {
+	var requestedConnectionID = req.param('socketID');
+	res.render('slave.html', { socketID: requestedConnectionID });
+});
 
 app.post('/upload', function(req, res) {
 	var form = new formidable.IncomingForm();
