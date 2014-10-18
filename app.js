@@ -77,6 +77,7 @@ io.on('connection', function(socket) {
 	socket.on('addMasterUser', function(user) {
 		connectedUser[socket.id] = [socket.id];
 		io.emit('masterUserAdded', socket.id);
+		console.log(socket.id);
 	});
 	socket.on('addSlaveUser', function(mastSocketID) {
 		connectedUser[mastSocketID].push(socket.id);
