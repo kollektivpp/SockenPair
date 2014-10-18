@@ -26,3 +26,8 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+/uploads
+.sass-cache
+/public/css/*.css
+/public/css/*.css.map

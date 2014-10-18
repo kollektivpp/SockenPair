@@ -26,20 +26,18 @@ app.engine('html', require('ejs').renderFile);
 app.get('/', function(req, res) {
 	res.render('master.html');
 });
-app.get('/connectSlaveUser', function(req, res) {
-	var requestedConnectionID = req.param('socketID');
-	res.render('slave.html', { socketID: requestedConnectionID });
-});
-app.get('/uploadfile', function(req, res) {
-	res.render(path.join(__dirname, 'views/upload_form.jade') );
-});
 
 app.post('/upload', function(req, res) {
 	var form = new formidable.IncomingForm();
 	form.parse(req, function(err, fields, files) {
-		var oldPath = files.file.path,
-			fileSize = files.file.size,
-			fileExt = files.file.name.split('.').pop(),
+		if (err) {
+			console.error(err);
+			return;
+		}
+		var file = files.filefield,
+			oldPath = file.path,
+			fileSize = file.size,
+			fileExt = file.name.split('.').pop(),
 			index = oldPath.lastIndexOf('/') + 1,
 			fileName = oldPath.substr(index),
 			newPath = path.join(process.env.PWD, '/uploads/', fileName + '.' + fileExt);
@@ -50,9 +48,11 @@ app.post('/upload', function(req, res) {
 						if (err) {
 							res.status(500);
 							res.json({'success': false});
+							// TODO: do something if error appears
 						} else {
 							res.status(200);
 							res.json({'success': true});
+							// TODO: do something if successfully uploaded
 						}
 					});
 				});
