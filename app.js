@@ -99,6 +99,13 @@ function notifyConnectedClients(mastSocketID, filePath) {
 		io.sockets.connected[item].emit('successfullyUploadedImage', filePath);
 	});
 }
+function showImageOnSlave(mastSocketID) {
+	connectedUser[mastSocketID].forEach(function(item) {
+		if (item != mastSocketID) {
+			io.sockets.connected[item].emit('showImage');
+		}
+	});
+}
 
 
 // HTTP Server
