@@ -3,6 +3,7 @@ var Dragger = Dragger || {};
 Dragger.initialize = function() {
     Dragger.dragImage = document.querySelector('#dragImage');
     Dragger.downloadwrapper = document.querySelector('#downloadwrapper');
+    Dragger.dragImageStyle = Dragger.dragImage.style;
     Dragger.dragStartX = 0;
     Dragger.dragStartY = 0;
 
@@ -17,19 +18,45 @@ Dragger.registerEventListener = function() {
 	}, false);
 
     Dragger.dragImage.addEventListener('dragend', function(e) {
-    	Dragger.dragImage.style.position = 'absolute';
-    	Dragger.dragImage.style.top = (e.y - Dragger.dragStartY) + 'px';
-    	Dragger.dragImage.style.left = (e.x - Dragger.dragStartX) + 'px';
-    	Dragger.dragStartX = 0;
-    	Dragger.dragStartY = 0;
-    	console.log(e);
+        Dragger.dragImageStyle.position = 'absolute';
+        Dragger.dragImageStyle.top = (e.y - Dragger.dragStartY) + 'px';
+        Dragger.dragImageStyle.left = (e.x - Dragger.dragStartX) + 'px';
+        Dragger.dragStartX = 0;
+        Dragger.dragStartY = 0;
     }, false);
 
-    Dragger.dragImage.addEventListener('click', function(e) {
-        // TODO: must be dynamic
-        Dragger.downloadwrapper.action = Dragger.downloadwrapper.action + '/' + 'bfee6581f6595eb6bf21c64d9edaadd9.png';
-    	Dragger.downloadwrapper.submit();
-    });
+    // ######### Mobile
+    Dragger.dragImage.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        Dragger.dragImageStyle.position = 'absolute';
+        var touches = e.changedTouches;
+        var imageOffset = Dragger.getOffset(Dragger.dragImage);
+
+        for (var i=0; i < touches.length; i++) {
+            Dragger.dragStartX = touches[i].pageX - imageOffset.left;
+            Dragger.dragStartY = touches[i].pageY - imageOffset.top;
+        }
+    }, false);
+
+    Dragger.dragImage.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        var touches = e.changedTouches;
+        for (var i=0; i < touches.length; i++) {
+            Dragger.dragImageStyle.top = (touches[i].pageY - Dragger.dragStartY) + 'px';
+            Dragger.dragImageStyle.left = (touches[i].pageX - Dragger.dragStartX) + 'px';
+        }
+        Dragger.dragStartX = 0;
+        Dragger.dragStartY = 0;
+    }, false);
+
+    Dragger.dragImage.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        var touches = e.changedTouches;
+        for (var i=0; i < touches.length; i++) {
+            Dragger.dragImageStyle.top = (touches[i].pageY - Dragger.dragStartY) + 'px';
+            Dragger.dragImageStyle.left = (touches[i].pageX - Dragger.dragStartX) + 'px';
+        }
+    }, false);
 };
 
 Dragger.getOffset = function(element) {
