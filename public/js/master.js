@@ -25,6 +25,7 @@ $(document).ready(function() {
 
 	socket.on('successfullyUploadedImage', function(filePath) {
 		$('#contentwrapper').hide();
+		$('#downloadwrapper').show();
 		$('#dragImage').attr('src', filePath);
 	});
 });

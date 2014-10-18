@@ -10,6 +10,7 @@ $(document).ready(function() {
 	});
 
 	socket.on('showImage', function(filePath) {
+		$('#downloadwrapper').show();
 		previewImage.addClass('show');
 	});
 });
