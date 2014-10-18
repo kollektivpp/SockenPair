@@ -10,15 +10,14 @@ $(document).ready(function() {
 
 	socket.on('successfullyUploadedImage', function(filePath) {
 		previewImage.attr('src', filePath);
-		// previewImage.css('left', -previewImage.width());
 	});
 
 	socket.on('showImage', function(viewportDelta) {
 		downloadwrapper.show();
-		previewImage.addClass('show');
+		// previewImage.addClass('show');
 		previewImageHidden.val(previewImage.attr('src'));
-    	downloadwrapper.submit();
+		// downloadwrapper.submit();
 
-		previewImage.css('right', screenWidth + viewportDelta);
+		downloadwrapper.css('right', screenWidth + viewportDelta);
 	});
 });
