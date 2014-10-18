@@ -10,7 +10,7 @@ var path = require('path'),
 	connectedUser = {};
 
 function createUploadFolder() {
-	fs.mkdirs(path.join(__dirname, 'uploads'), function(err) {
+	fs.mkdirs(path.join(__dirname, 'public/uploads'), function(err) {
 		if (err) {
 			console.error(err);
 		}
@@ -34,6 +34,7 @@ app.get('/connectSlaveUser', function(req, res) {
 
 app.post('/upload', function(req, res) {
 	var form = new formidable.IncomingForm();
+
 	form.parse(req, function(err, fields, files) {
 		if (err) {
 			console.error(err);
@@ -45,7 +46,7 @@ app.post('/upload', function(req, res) {
 			fileExt = file.name.split('.').pop(),
 			index = oldPath.lastIndexOf('/') + 1,
 			fileName = oldPath.substr(index),
-			newPath = path.join(process.env.PWD, '/uploads/', fileName + '.' + fileExt);
+			newPath = path.join(process.env.PWD, 'public/uploads/', fileName + '.' + fileExt);
 
 			fs.readFile(oldPath, function(err, data) {
 				fs.writeFile(newPath, data, function(err) {
@@ -55,9 +56,9 @@ app.post('/upload', function(req, res) {
 							res.json({'success': false});
 							// TODO: do something if error appears
 						} else {
+							notifyConnectedClients(fields.masterSocketID, '/uploads/' + fileName + '.' + fileExt);
 							res.status(200);
 							res.json({'success': true});
-							// TODO: do something if successfully uploaded
 						}
 					});
 				});
@@ -70,6 +71,7 @@ app.get('/download/:imageName', function(req, res) {
 	res.download(file);
 });
 
+// Socket Stuff
 io.on('connection', function(socket) {
 
 	socket.on('addMasterUser', function(user) {
@@ -87,6 +89,14 @@ io.on('connection', function(socket) {
 	});
 });
 
-http.listen(port, function() {
-	console.log('listen on port ' + port);
+function notifyConnectedClients(mastSocketID, filePath) {
+	connectedUser[mastSocketID].forEach(function(item) {
+		io.sockets.connected[item].emit('successfullyUploadedImage', filePath);
+	});
+}
+
+
+// HTTP Server
+http.listen(8888, function() {
+	console.log('listen on port ' + '8888'.rainbow);
 });
