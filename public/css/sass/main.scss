@@ -71,3 +71,18 @@ select {
     height: 0;
     width: 0;
 }
+#dragImage {
+    width: 350px;
+    height: 150px;
+}
+#previewImage {
+    @include transition(left, 1000ms, ease-out);
+    position: absolute;
+    left: -100%;
+    max-height: 500px;
+
+    &.show {
+        @include transition(left, 1000ms, ease-out);
+        left: 10%
+    }
+}
