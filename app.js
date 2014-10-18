@@ -3,11 +3,13 @@ var path = require('path'),
 	app = express(),
 	http = require('http').Server(app),
 	colors = require('colors'),
+	port = process.env.PORT || 8888,
 	io = require('socket.io')(http),
 	formidable = require('formidable'),
-	fs = require('fs-extra');
+	fs = require('fs-extra'),
+	connectedUser = {};
 
-function createUploadFolder(arguments) {
+function createUploadFolder() {
 	fs.mkdirs(path.join(__dirname, 'uploads'), function(err) {
 		if (err) {
 			console.error(err);
@@ -18,13 +20,16 @@ function createUploadFolder(arguments) {
 createUploadFolder();
 
 // Routing
-app.use( express.static(__dirname + '/public') );
+app.set('views', __dirname + '/public');
+app.engine('html', require('ejs').renderFile);
 
 app.get('/', function(req, res) {
-	// res.status(200).end();
-	res.sendFile( 'index.html' );
+	res.render('master.html');
 });
-
+app.get('/connectSlaveUser', function(req, res) {
+	var requestedConnectionID = req.param('socketID');
+	res.render('slave.html', { socketID: requestedConnectionID });
+});
 app.get('/uploadfile', function(req, res) {
 	res.render(path.join(__dirname, 'views/upload_form.jade') );
 });
@@ -56,16 +61,19 @@ app.post('/upload', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-	console.log('user connected');
 
-	socket.on('foobar', function(msg) {
-		console.log(msg);
-
-		io.emit('foobar', msg);
+	socket.on('addMasterUser', function(user) {
+		connectedUser[socket.id] = [socket.id];
+		io.emit('masterUserAdded', socket.id);
+	});
+	socket.on('addSlaveUser', function(mastSocketID) {
+		connectedUser[mastSocketID].push(socket.id);
+		io.sockets.connected[mastSocketID].emit('slaveUserConnected');
 	});
 
 	socket.on('disconnect', function() {
-		console.log('user disconnected');
+		//TODO: make sure to inform master or slave that the counterpart has disconnected
+		//TODO: remove them from connectedUser array
 	});
 });
 
