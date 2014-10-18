@@ -1,7 +1,9 @@
 $(document).ready(function() {
 	var socket = io(),
 		masterSocketID = $('#masterSocketID').val(),
-		previewImage = $('#previewImage');
+		previewImage = $('#previewImage'),
+		downloadwrapper = $('#downloadwrapper'),
+		previewImageHidden = $('#previewImageHidden');
 
 	socket.emit( 'addSlaveUser', masterSocketID );
 
@@ -9,8 +11,10 @@ $(document).ready(function() {
 		previewImage.attr('src', filePath);
 	});
 
-	socket.on('showImage', function(filePath) {
-		$('#downloadwrapper').show();
+	socket.on('showImage', function() {
+		downloadwrapper.show();
 		previewImage.addClass('show');
+		previewImageHidden.val(previewImage.attr('src'));
+    	downloadwrapper.submit();
 	});
 });

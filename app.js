@@ -7,6 +7,7 @@ var path = require('path'),
 	io = require('socket.io')(http),
 	formidable = require('formidable'),
 	fs = require('fs-extra'),
+	bodyParser = require('body-parser'),
 	connectedUser = {};
 
 function createUploadFolder() {
@@ -19,8 +20,12 @@ function createUploadFolder() {
 
 createUploadFolder();
 
+
+
 // Routing
 app.use( express.static(__dirname + '/public') );
+app.use( bodyParser.json() );
+app.use( bodyParser.urlencoded() );
 app.set('views', __dirname + '/public');
 app.engine('html', require('ejs').renderFile);
 
@@ -66,8 +71,8 @@ app.post('/upload', function(req, res) {
 	});
 });
 
-app.get('/download/:imageName', function(req, res) {
-	var file = __dirname + '/uploads/' + req.param("imageName");
+app.post('/download', function(req, res) {
+	var file = __dirname + '/public' + req.body.previewImageHidden;
 	res.download(file);
 });
 
