@@ -5,6 +5,8 @@
   "dependencies": {
     "express": "^4.9.8",
     "socket.io": "^1.1.0",
-    "colors": "*"
+    "colors": "*",
+    "formidable": "*",
+    "fs-extra": "*"
   }
 }

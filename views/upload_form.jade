@@ -1,0 +1,10 @@
+doctype html
+html
+	head
+		title Upload Form
+	body
+		h1 Upload File
+		form(method="POST", action="/upload", enctype="multipart/form-data")
+			input(type="text", name="title")
+			input(type="file", name="file")
+			input(type="submit", value="Upload")
