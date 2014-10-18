@@ -21,40 +21,11 @@
 
 		<div id="qrcode"></div>
 
-
     	<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
-    	<script src="/js/uploader.js"></script>
-    	<script src="/js/qrcode.min.js"></script>
     	<script src="/socket.io/socket.io.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
-		<script src="/js/uploader.js"></script>
+    	<script src="/js/qrcode.min.js"></script>
+    	<script src="/js/uploader.js"></script>
 		<script src="/js/dragger.js"></script>
-		<script src="/socket.io/socket.io.js"></script>
-		<script>
-			$(document).ready(function() {
-				var socket = io(),
-					clientID = null,
-					connectionHint = $('#connectionHint');
-
-				socket.emit( 'addMasterUser', clientID );
-
-				socket.on('masterUserAdded', function(socketID) {
-					if ( !clientID ) {
-						clientID = socketID,
-						slaveURL = location.href + 'connectSlaveUser?socketID=' + clientID;
-
-						new QRCode(document.getElementById("qrcode"), slaveURL);
-						connectionHint.attr('href', slaveURL);
-						connectionHint.show();
-					}
-				});
-
-				socket.on('slaveUserConnected', function() {
-					connectionHint.hide();
-					$('#qrcode').hide();
-					$('#contentwrapper').show();
-				});
-			});
-		</script>
+		<script src="/js/master.js"></script>
 	</body>
 </html>
